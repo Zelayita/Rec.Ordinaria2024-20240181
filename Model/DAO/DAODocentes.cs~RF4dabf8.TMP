@@ -1,0 +1,87 @@
+﻿using Refuerzo2024.Model.DTO;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Refuerzo2024.Model.DAO
+{
+    internal class DAODocentes : DToDocentes
+    {
+        SqlConnection con = obtenerConexion();
+
+
+
+        public DataSet ObtenerDocentes()
+        {
+            try
+            {
+                string query = "SELECT * FROM Docentes";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteScalar();
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "Docentes");
+                return ds;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
+
+        public bool RegistrarDocente()
+        {
+            try
+            {
+                string query = "INSERT INTO Docentes VALUES (@param1, @param2, @param3)";
+                SqlCommand cmdInsert = new SqlCommand(query, con);
+                cmdInsert.Parameters.AddWithValue("param1", NombreDocente);
+                cmdInsert.Parameters.AddWithValue("param2", ApellidoDocente);
+                cmdInsert.Parameters.AddWithValue("param3", DUI);
+                cmdInsert.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
+        public bool ActualizarEstudiante()
+        {
+            try
+            {
+                //Crea la instrucción de lo que se quiere hacer
+                string query = "UPDATE Docentes SET nombreDocente = @param1," +
+                    " apellidoDocente = @apellidoEstudiante, fechaNacimiento  = @fechaNacimiento, telefono = @telefono, correo = @correo, dui = @dui, idEspecialidad = @idEspecialidad WHERE idEstudiante = @idEstudiante";
+                //Crea el comando con la instrucción y la conexión
+                SqlCommand cmdUpdate = new SqlCommand(query, con);
+                cmdUpdate.Parameters.AddWithValue("nombreEstudiante", NombreEstudiante);
+                //Ejecuta la instrucciones
+                cmdUpdate.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally { con.Close(); }
+        }
+
+    }
+}
