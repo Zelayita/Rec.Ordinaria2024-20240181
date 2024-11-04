@@ -98,16 +98,16 @@ namespace Refuerzo2024.Controller.Docentes
             {
                 DAODocentes data = new DAODocentes();
                 data.IdDocente = int.Parse(obj.txtID.Text);
-                if (MessageBox.Show("¿Desea eliminar el registro seleccionado?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("¿Desea eliminar el registro seleccionado?", "Confirmar eliminación", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
                     if (data.EliminarDocente() == true)
                     {
-                        MessageBox.Show("El dato fue eliminado correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("El Docente fue eliminado correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LlenarDataGridViewDocentes();
                     }
                     else
                     {
-                        MessageBox.Show("El registro no pudo ser eliminado", "Proceso interrumpido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("El Docente no pudo ser eliminado", "Proceso interrumpido", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
